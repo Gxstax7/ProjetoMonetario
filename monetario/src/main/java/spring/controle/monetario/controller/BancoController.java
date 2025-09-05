@@ -50,6 +50,10 @@ public class BancoController {
         return bancoService.deletarBanco(id);
    } 
     
-    
+   @PostMapping("/atualizarBanco/{id}")
+   public ResponseEntity<Void> atualizaBanco(@PathVariable Long id, @RequestBody Banco banco) {
+        return bancoService.updateBanco(id, banco);
+   }
+   
 
 }

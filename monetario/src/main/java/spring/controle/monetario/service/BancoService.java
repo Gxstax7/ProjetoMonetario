@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.controle.monetario.model.Banco;
@@ -41,5 +42,15 @@ public class BancoService {
     }
 
     //TODO: Criar endpoit de update
+    public ResponseEntity<Void> updateBanco(Long id, Banco bancoAtt){
+        if(!bancoRepository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }else{
+            Banco banco = bancoRepository.findById(id).get();
+            banco.setNome(bancoAtt.getNome());
+            bancoRepository.save(banco);
+            return ResponseEntity.noContent().build();
+        }
+    }
 
 }
