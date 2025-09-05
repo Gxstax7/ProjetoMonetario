@@ -1,5 +1,9 @@
 package spring.controle.monetario.repository;
 
-public interface RegistroRepository extends JPARepository <Registro, Long id> {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import spring.controle.monetario.model.Registro;
+
+public interface RegistroRepository extends JpaRepository <Registro, Long> {
 
 }
