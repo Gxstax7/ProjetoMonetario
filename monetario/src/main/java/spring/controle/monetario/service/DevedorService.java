@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.controle.monetario.model.Devedor;
 import spring.controle.monetario.repository.DevedorRepository;
 
+@Service
 public class DevedorService {
 
     private DevedorRepository devedorRepository;
@@ -21,7 +23,7 @@ public class DevedorService {
         return devedorRepository.findAll();
     }
 
-    public Devedor criaDevedor(Devedor devedor){
+    public Devedor criarDevedor(Devedor devedor){
         return devedorRepository.save(devedor);
     }
 
