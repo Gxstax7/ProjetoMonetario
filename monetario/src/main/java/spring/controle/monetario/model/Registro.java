@@ -20,6 +20,11 @@ public class Registro {
     private boolean status;
     private LocalDate data;
 
+    /* 
+    private Devedor devedor;
+    private Banco banco;
+    */
+
     // Construtor
     public Registro(final Long id, final double  valor, final String descricao, final String categoria, final boolean status, final LocalDate data){
         this.id = id;
@@ -87,4 +92,23 @@ public class Registro {
     public void setData(LocalDate data) {
         this.data = data;
     }
+
+    /* 
+    public Banco getBanco() {
+        return banco;
+    }
+    
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+    
+    public Devedor getDevedor() {
+        return devedor;
+    }
+
+    public void setDevedor(Devedor devedor) {
+        this.devedor = devedor;
+    }
+        */
+
 }
