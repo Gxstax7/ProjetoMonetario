@@ -1,11 +1,13 @@
 package spring.controle.monetario.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Registro {
@@ -18,21 +20,23 @@ public class Registro {
     private String descricao;
     private String categoria;
     private boolean status;
-    private LocalDate data;
+    private LocalDateTime data;
 
-    /* 
+    @OneToOne (cascade = CascadeType.ALL)
     private Devedor devedor;
+    @OneToOne (cascade = CascadeType.ALL)
     private Banco banco;
-    */
 
     // Construtor
-    public Registro(final Long id, final double  valor, final String descricao, final String categoria, final boolean status, final LocalDate data){
+    public Registro(final Long id, final double  valor, final String descricao, final String categoria, final boolean status, final LocalDateTime data, final Devedor devedor, final Banco banco){
         this.id = id;
         this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
         this.status = status;
         this.data = data;
+        this.devedor = devedor;
+        this.banco = banco;
     }
 
     public Registro(){
@@ -41,6 +45,9 @@ public class Registro {
         this.valor = 0;
         this.descricao ="";
         this.status = false;
+        this.devedor = null;
+        this.banco = null;
+        this.data = LocalDateTime.now();
     }
 
     // Getters
@@ -64,7 +71,7 @@ public class Registro {
         return status;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
@@ -89,11 +96,11 @@ public class Registro {
         this.status = status;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 
-    /* 
+    
     public Banco getBanco() {
         return banco;
     }
@@ -109,6 +116,6 @@ public class Registro {
     public void setDevedor(Devedor devedor) {
         this.devedor = devedor;
     }
-        */
+        
 
 }

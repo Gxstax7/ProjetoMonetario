@@ -24,7 +24,9 @@ public class RegistroService {
 
     public Optional <Registro> buscarRegistro (Long id){
         return registroRepository.findById(id);
-    } 
+    }
+
+    //TODO: Criar busca de registro por idBanco e idUsuario
 
     public Registro criaRegistro (Registro registro){
         return registroRepository.save(registro);
