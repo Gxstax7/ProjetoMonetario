@@ -195,7 +195,7 @@
 
     async function carregarDevedores() {
         try {
-            const resposta = await fetch("http://localhost:8080/devedores/listar");
+            const resposta = await fetch("http://localhost:8080/devedor/listarDevedores");
             if (!resposta.ok) {
                 throw new Error("Erro ao buscar devedores: " + resposta.status);
             }
