@@ -16,10 +16,10 @@ public class Banco {
     private Long id;
     
     private String nome;
-    private LocalDate dataFechamento;
+    private int dataFechamento;
 
     // Construtor
-    public Banco(final Long id, final String nome, final LocalDate dataFechamento){
+    public Banco(final Long id, final String nome, final int dataFechamento){
         this.id = id;
         this.nome = nome;
         this.dataFechamento = dataFechamento;
@@ -30,7 +30,7 @@ public class Banco {
     }
 
     // Getters
-    public LocalDate getDataFechamento() {
+    public int getDataFechamento() {
         return dataFechamento;
     }
 
@@ -43,7 +43,7 @@ public class Banco {
     }
 
     // Setters
-    public void setDataFechamento(LocalDate dataFechamento) {
+    public void setDataFechamento(int dataFechamento) {
         this.dataFechamento = dataFechamento;
     }  
 

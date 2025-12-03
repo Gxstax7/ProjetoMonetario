@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f3f3;
+        }
+
+        header {
+            background: #4A6CF7;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .table-box {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            width: 420px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a.name-link {
+            color: #4A6CF7;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        a.name-link:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            padding: 6px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn { background: #ffc107; color: black; }
+        .delete-btn { background: #dc3545; color: white; }
+
+        .actions {
+            white-space: nowrap;
+        }
+
+        /* REGISTROS */
+        .registros-box {
+            width: 90%;
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Sistema de Controle
+</header>
+
+<div class="container">
+
+    <!-- TABELA MEUS BANCOS -->
+    <div class="table-box">
+        <h2>Meus Bancos</h2>
+        <table id="tabela-bancos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Vencimento</th>
+                    <th>Valor Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populado via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TABELA DEVEDORES -->
+    <div class="table-box">
+        <h2>Devedores</h2>
+        <table id="tabela-devedores">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populado via JS -->
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- TABELA REGISTROS -->
+<div class="registros-box">
+    <h2>Registros</h2>
+    <table id="tabela-registros">
+        <thead>
+            <tr>
+                <th>Banco</th>
+                <th>Devedor</th>
+                <th>Valor</th>
+                <th>Dia</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Populado via JS -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    async function carregarBancos() {
+        try {
+            const resposta = await fetch("http://localhost:8080/bancos/listarBancos");
+
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar bancos: " + resposta.status);
+            }
+
+            const bancos = await resposta.json();
+
+            const tbody = document.querySelector("#tabela-bancos tbody");
+            tbody.innerHTML = "";
+
+            bancos.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><a class="name-link" href="detalhes.html?id=${item.id}">${item.nome}</a></td>
+                        <td>${item.dataFechamento}</td>
+                        <td>${item.valorTotal || "R$ 0,00"}</td>
+                        <td class="actions">
+                            <button class="edit-btn" onclick="editar('banco', ${item.id})">Editar</button>
+                            <button class="delete-btn" onclick="excluir('banco', ${item.id})">Excluir</button>
+                        </td>
+                    </tr>`;
+            });
+
+        } catch (erro) {
+            console.error(erro);
+            alert("Ocorreu um erro ao carregar os dados.");
+        }
+    }
+
+    async function carregarDevedores() {
+        try {
+            const resposta = await fetch("http://localhost:8080/devedores/listar");
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar devedores: " + resposta.status);
+            }
+
+            const lista = await resposta.json();
+            const tbody = document.querySelector("#tabela-devedores tbody");
+            tbody.innerHTML = "";
+
+            lista.forEach(item => {
+                tbody.innerHTML += `
+                <tr>
+                    <td><a class="name-link" href="devedor.html?id=${item.id}">${item.nome}</a></td>
+                    <td>${item.valorTotal || "R$ 0,00"}</td>
+                    <td class="actions">
+                        <button class="edit-btn" onclick="editar('devedor', ${item.id})">Editar</button>
+                        <button class="delete-btn" onclick="excluir('devedor', ${item.id})">Excluir</button>
+                    </td>
+                </tr>`;
+            });
+
+        } catch (erro) {
+            console.error(erro);
+            alert("Erro ao carregar devedores.");
+        }
+    }
+
+    function editar(tipo, id) {
+        alert(`Editar ${tipo} ID: ${id}`);
+    }
+
+    function excluir(tipo, id) {
+        alert(`Excluir ${tipo} ID: ${id}`);
+    }
+
+    carregarBancos();
+    carregarDevedores();
+</script>
+
+</body>
+</html>

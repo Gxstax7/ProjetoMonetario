@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/banco")
+@CrossOrigin(origins = "*")
+@RequestMapping("/bancos")
 public class BancoController {
 
     BancoService bancoService;
@@ -34,7 +36,7 @@ public class BancoController {
         return bancoService.criarBanco(banco);
     }
 
-    @GetMapping("/listarBanco")
+    @GetMapping("/listarBancos")
     public List <Banco> buscaGeral() {
         return bancoService.mostrarBancos();
     }
