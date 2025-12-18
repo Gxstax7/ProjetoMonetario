@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Controle</title>
+  <link rel="stylesheet" href="FormAttBancos.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Sistema de Controle</h1>
+  </header>
+
+  <!-- Sub Header -->
+  <section class="sub-header">
+    <h2>Criação / Atualização de Dados</h2>
+  </section>
+
+  <!-- Container do Form -->
+  <main class="container">
+    <form class="form-box">
+
+      <div class="form-group">
+        <label for="nome">Nome do Banco</label>
+        <input type="text" id="nome" placeholder="Digite o nome">
+      </div>
+
+      <div class="form-group">
+        <label for="vencimento">Data de Vencimento (dia)</label>
+        <input type="number" id="vencimento" placeholder="Ex: 20" max="31">
+      </div>
+
+      <button type="button" onclick="salvarDados()">
+        Salvar
+      </button>
+
+    </form>
+  </main>
+
+  <script src="FormAttBancos.js"></script>
+</body>
+</html>
