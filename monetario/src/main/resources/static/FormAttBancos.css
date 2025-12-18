@@ -9,11 +9,13 @@ body {
 }
 
 /* Header */
-.header {
-  background: #4f6df5;
+header {
+  background: #4A6CF7;
   color: white;
-  padding: 15px;
+  padding: 20px;
+  font-size: 24px;
   text-align: center;
+  font-weight: bold;
 }
 
 /* Sub header */
